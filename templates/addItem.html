@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="add-item">
+    <form action="" method="post" action="{% url 'add_item' %}" class="form-container">
+        {% csrf_token %}
+        <h2 class="form-title">Add Food Item</h2>
+        <div class="form-fields">
+            {{ foodForm.as_p }}
+        </div>
+        <button class="btn-submit" type="submit">Add</button>
+    </form>
+
+    <div class="messages-container">
+        {% if messages %}
+            {% for msg in messages %}
+                <span class="alert {{ msg.tags }}">{{ msg }}</span>
+            {% endfor %}
+        {% endif %}
+        {% for err in foodForm.errors %}
+            <span class="error-text">{{ err }}</span>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

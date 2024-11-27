@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<form method="post" action="{% url 'register' %}" class="form-container">
+    {% csrf_token %}
+    <h2 class="form-title">Register</h2>
+    <div class="form-fields">
+        {{ regForm.as_p }}
+    </div>
+    <button type="submit" class="btn-submit">Register</button>
+</form>
+
+<div class="errors">
+    {% for err in regForm.errors %}
+        <span class="error-text"> {{ err }} </span>
+    {% endfor %}
+</div>
+
+<div class="form-footer">
+    <a href="{% url 'login' %}" class="footer-link">Existing User? Login Yourself →</a>
+</div>
+
+{% endblock %}
+
