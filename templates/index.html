@@ -6,14 +6,20 @@
 <div class="menu-items">
     {% for food in foods %}
         <div class="menu-item">
-            <p><strong>{{ food.name }}</strong> - Rs.{{ food.price }}</p>
+            <form method="post" action="{% url 'addItemCart' %}">
+                {% csrf_token %}
+                <input type="hidden" name="food_id" value="{{ food.id }}">
+                <p><strong>{{ food.name }}</strong> - Rs.{{ food.price }}</p>
+                <button type="submit" class="center">+</button>
+            </form>
         </div>
     {% endfor %}
 </div>
 
+{% if user.is_superuser %}
 <div class="add-item">
     <a href="{% url 'add_item' %}" class="add-item-link">Add New Food Item</a>
 </div>
-
+{% endif %}
 
 {% endblock %}

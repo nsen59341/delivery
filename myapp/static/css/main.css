@@ -84,6 +84,12 @@
     text-decoration: underline;
 }
 
+.center{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 /* Footer CSS */
 .footer {
     display: block;
@@ -95,7 +101,7 @@
 }
 
 
-/* aadd item css  */
+/* add item css  */
 
 
     .form-container {

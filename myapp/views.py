@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from .forms import FoodForm
-from .models import Food
+from .models import Food, Order
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -30,6 +30,23 @@ def add_item(request):
         else:
             messages.error(request, 'Could not add the Item.')
     return render(request, "addItem.html", {'foodForm': foodForm})
+
+@auth 
+def add_item_cart(request):
+    if request.method=='POST':
+        
+        food_id = request.POST.get('food_id')
+        food = Food.objects.get(id=food_id)
+        # order = Order() 
+        order = Order.objects.filter(user=request.user, is_placed=False).first()
+        if order:
+            order.items.add(food)
+        else:
+            order, created = Order.objects.create(user=request.user)
+            order.items.add(food)
+        order.user = request.user
+        order.save()
+    return redirect('index')
 
 # View Function to Login 
 @guest
